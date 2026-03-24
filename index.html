@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BBO Stamped — Request a Seat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────────────────────────────────────
+       TOKENS
+    ───────────────────────────────────────── */
+    :root {
+      --pink:           #FF00C4;
+      --pink-dim:       #b8008d;
+      --pink-glow:      rgba(255, 0, 196, 0.18);
+      --pink-border:    rgba(255, 0, 196, 0.35);
+      --black:          #050505;
+      --surface-1:      #0d0d0d;
+      --surface-2:      #111111;
+      --surface-3:      #181818;
+      --surface-4:      #202020;
+      --border:         rgba(255,255,255,0.07);
+      --text-primary:   #f2ede8;
+      --text-secondary: rgba(242,237,232,0.72);
+      --text-muted:     rgba(242,237,232,0.50);
+      --text-faint:     rgba(242,237,232,0.30);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--black);
+      color: var(--text-primary);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* grain overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9000;
+    }
+
+    /* ─────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px;
+      background: linear-gradient(to bottom, rgba(5,5,5,0.96) 0%, transparent 100%);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px; letter-spacing: 0.08em;
+      color: var(--text-primary);
+    }
+
+    .nav-logo em { color: var(--pink); font-style: normal; }
+
+    .nav-handle {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 24px 64px;
+      position: relative; overflow: hidden;
+      background: var(--black);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 55% at 100% 0%,   rgba(255,0,196,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 0%  100%,  rgba(255,0,196,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-slash {
+      position: absolute; top: -40px; right: -80px;
+      width: 3px; height: 420px;
+      background: linear-gradient(to bottom, var(--pink) 0%, transparent 100%);
+      transform: rotate(22deg); transform-origin: top right;
+      opacity: 0.55;
+    }
+
+    .hero-slash-2 {
+      position: absolute; top: -40px; right: -46px;
+      width: 1px; height: 300px;
+      background: linear-gradient(to bottom, rgba(255,0,196,0.35) 0%, transparent 100%);
+      transform: rotate(22deg); transform-origin: top right;
+    }
+
+    .hero-eyebrow {
+      position: relative; z-index: 2;
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 24px;
+      opacity: 0; animation: riseIn 0.7s cubic-bezier(.22,.68,0,1.2) forwards 0.15s;
+    }
+
+    .eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--pink); flex-shrink: 0;
+    }
+
+    .eyebrow-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--pink);
+    }
+
+    .hero-headline {
+      position: relative; z-index: 2;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(78px, 21vw, 168px);
+      line-height: 0.85; letter-spacing: 0.01em;
+      color: var(--text-primary);
+      opacity: 0; animation: riseIn 0.8s cubic-bezier(.22,.68,0,1.2) forwards 0.3s;
+    }
+
+    .hero-headline .accent { color: var(--pink); }
+    .hero-headline .block  { display: block; }
+
+    .hero-rule {
+      position: relative; z-index: 2;
+      width: 44px; height: 2px;
+      background: var(--pink); margin: 30px 0;
+      opacity: 0; animation: riseIn 0.6s ease forwards 0.52s;
+    }
+
+    .hero-sub {
+      position: relative; z-index: 2;
+      font-size: clamp(15px, 3.8vw, 18px);
+      line-height: 1.68; color: var(--text-secondary);
+      max-width: 400px;
+      opacity: 0; animation: riseIn 0.7s ease forwards 0.65s;
+    }
+
+    .hero-cta {
+      position: relative; z-index: 2;
+      margin-top: 36px;
+      opacity: 0; animation: riseIn 0.7s ease forwards 0.8s;
+    }
+
+    /* ─────────────────────────────────────────
+       SHARED
+    ───────────────────────────────────────── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(46px, 12vw, 82px);
+      line-height: 0.88; color: var(--text-primary);
+      margin-bottom: 22px;
+    }
+
+    .body-copy {
+      font-size: 15px; line-height: 1.82;
+      color: var(--text-secondary);
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600; font-size: 12px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      text-decoration: none;
+      padding: 18px 42px;
+      border: none; cursor: pointer;
+      transition: all 0.22s ease;
+      position: relative; overflow: hidden;
+    }
+
+    .btn-pink {
+      background: var(--pink); color: #fff;
+    }
+
+    .btn-pink:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 44px rgba(255,0,196,0.32);
+    }
+
+    /* ─────────────────────────────────────────
+       MARQUEE
+    ───────────────────────────────────────── */
+    .marquee-section {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-1);
+      overflow: hidden; padding: 17px 0;
+    }
+
+    .marquee-track {
+      display: flex; white-space: nowrap;
+      animation: ticker 24s linear infinite;
+    }
+
+    .marquee-track:hover { animation-play-state: paused; }
+
+    .marquee-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px; letter-spacing: 0.06em;
+      color: var(--text-primary);
+      padding: 0 28px; flex-shrink: 0;
+    }
+
+    .msep { color: var(--pink); }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─────────────────────────────────────────
+       WHAT IS IT
+    ───────────────────────────────────────── */
+    .what-section {
+      background: var(--surface-1);
+      padding: 80px 24px;
+    }
+
+    .what-inner { max-width: 680px; margin: 0 auto; }
+
+    .stat-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; margin-top: 48px;
+    }
+
+    .stat-card {
+      background: var(--surface-3);
+      padding: 26px 22px;
+      border-top: 2px solid transparent;
+      transition: border-color 0.25s ease;
+    }
+
+    .stat-card:hover { border-color: var(--pink); }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px; line-height: 1;
+      color: var(--pink); margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    /* ─────────────────────────────────────────
+       PERKS
+    ───────────────────────────────────────── */
+    .perks-section {
+      background: var(--black);
+      padding: 80px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .perks-inner { max-width: 680px; margin: 0 auto; }
+
+    .perks-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; margin-top: 44px;
+    }
+
+    .perk {
+      background: var(--surface-2);
+      padding: 30px 24px;
+      position: relative; overflow: hidden;
+      transition: background 0.2s ease;
+    }
+
+    .perk:hover { background: var(--surface-3); }
+
+    .perk-bar {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(to right, var(--pink) 0%, transparent 100%);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+
+    .perk:hover .perk-bar { transform: scaleX(1); }
+
+    .perk-icon { font-size: 22px; margin-bottom: 14px; display: block; }
+
+    .perk-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--text-primary); margin-bottom: 10px;
+    }
+
+    .perk-desc {
+      font-size: 13px; line-height: 1.72;
+      color: var(--text-secondary);
+    }
+
+    /* ─────────────────────────────────────────
+       CRITERIA
+    ───────────────────────────────────────── */
+    .criteria-section {
+      background: var(--surface-1);
+      padding: 80px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .criteria-inner { max-width: 680px; margin: 0 auto; }
+
+    .criteria-list {
+      margin-top: 40px;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+
+    .criteria-item {
+      display: flex; align-items: flex-start; gap: 18px;
+      background: var(--surface-2);
+      padding: 22px 22px;
+      transition: background 0.2s ease;
+    }
+
+    .criteria-item:hover { background: var(--surface-3); }
+
+    .c-icon {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--pink); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+    }
+
+    .c-icon svg {
+      width: 10px; height: 10px;
+      stroke: #fff; stroke-width: 2.5; fill: none;
+    }
+
+    .c-icon.c-no {
+      background: var(--surface-4);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .c-icon.c-no svg { stroke: var(--text-faint); }
+
+    .criteria-text {
+      font-size: 14px; line-height: 1.68;
+      color: var(--text-secondary);
+    }
+
+    .criteria-text strong {
+      color: var(--text-primary); font-weight: 600;
+      display: block; margin-bottom: 4px;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* ─────────────────────────────────────────
+       FORM
+    ───────────────────────────────────────── */
+    .form-section {
+      background: var(--black);
+      padding: 80px 24px 100px;
+      border-top: 1px solid var(--border);
+    }
+
+    .form-inner { max-width: 540px; margin: 0 auto; }
+
+    .form-intro {
+      font-size: 14px; line-height: 1.78;
+      color: var(--text-secondary);
+      margin-top: 14px; margin-bottom: 48px;
+    }
+
+    .field { margin-bottom: 24px; }
+
+    .field label {
+      display: block;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0;
+      color: var(--text-primary);
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px; font-weight: 400;
+      padding: 15px 18px;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      -webkit-appearance: none; appearance: none;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--pink);
+      background: var(--surface-3);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--text-faint);
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FF00C4' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 18px center;
+      padding-right: 44px; cursor: pointer;
+    }
+
+    .field select option { background: #1a1a1a; color: var(--text-primary); }
+    .field textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+    .field-error {
+      display: none;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.06em; color: var(--pink);
+      margin-top: 7px;
+    }
+
+    .field input.has-error,
+    .field select.has-error,
+    .field textarea.has-error { border-color: var(--pink); }
+
+    .char-count {
+      font-size: 11px; color: var(--text-faint);
+      text-align: right; margin-top: 6px;
+    }
+
+    .form-submit { margin-top: 36px; }
+
+    .form-submit .btn {
+      width: 100%; text-align: center; padding: 20px; font-size: 12px;
+    }
+
+    .form-note {
+      font-size: 12px; color: var(--text-muted);
+      text-align: center; margin-top: 18px;
+      line-height: 1.65; letter-spacing: 0.04em;
+    }
+
+    /* ─────────────────────────────────────────
+       SUCCESS
+    ───────────────────────────────────────── */
+    .success-state {
+      display: none; text-align: center; padding: 56px 0;
+    }
+
+    .success-icon {
+      width: 66px; height: 66px; border-radius: 50%;
+      background: rgba(255,0,196,0.1);
+      border: 1px solid var(--pink-border);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px; font-size: 28px;
+    }
+
+    .success-state h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 54px; line-height: 0.92;
+      color: var(--text-primary); margin-bottom: 20px;
+    }
+
+    .success-state h3 span { color: var(--pink); }
+
+    .success-state p {
+      font-size: 15px; color: var(--text-secondary);
+      line-height: 1.75; max-width: 320px; margin: 0 auto;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      background: var(--surface-1);
+      border-top: 1px solid var(--border);
+      padding: 48px 24px 36px;
+    }
+
+    .footer-inner {
+      max-width: 680px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px; letter-spacing: 0.06em;
+      color: var(--text-primary); margin-bottom: 8px;
+    }
+
+    .footer-logo em { color: var(--pink); font-style: normal; }
+
+    .footer-tagline {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex; flex-wrap: wrap; gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-secondary); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover { color: var(--pink); }
+
+    .footer-bottom {
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; gap: 10px;
+    }
+
+    .footer-bottom p {
+      font-size: 12px; color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ─────────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────────── */
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 560px) {
+      .perks-grid { grid-template-columns: 1fr; }
+      .hero { padding-bottom: 64px; }
+      .footer-bottom { flex-direction: column; }
+    }
+
+    @media (min-width: 768px) {
+      .stat-row { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo">BAD B<em>*</em>TCHES ONLY 💋</div>
+    <span class="nav-handle">@dabboshow</span>
+  </nav>
+
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-slash"  aria-hidden="true"></div>
+    <div class="hero-slash-2" aria-hidden="true"></div>
+
+    <div class="hero-eyebrow">
+      <div class="eyebrow-dot"></div>
+      <span class="eyebrow-label">BBO Stamped — Casting Now Open</span>
+    </div>
+
+    <h1 class="hero-headline">
+      <span class="block">NOT EVERY</span>
+      <span class="block">GIRL GETS</span>
+      <span class="block accent">A SEAT.</span>
+    </h1>
+
+    <div class="hero-rule"></div>
+
+    <p class="hero-sub">
+      BBO Stamped is an exclusive, curated restaurant review series.
+      Professional production. Real content. Serious visibility.
+      If you belong at the table — apply.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#apply" class="btn btn-pink">Apply for a Seat</a>
+    </div>
+  </section>
+
+
+  <!-- ══ MARQUEE ══ -->
+  <div class="marquee-section" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Professional Production <span class="msep">💋</span></span>
+      <span class="marquee-item">50K+ Eyes on Your Face <span class="msep">💋</span></span>
+      <span class="marquee-item">Curated Women Only <span class="msep">💋</span></span>
+      <span class="marquee-item">BBO Stamped <span class="msep">💋</span></span>
+      <span class="marquee-item">No Cost to You <span class="msep">💋</span></span>
+      <span class="marquee-item">Editorial Quality Content <span class="msep">💋</span></span>
+      <span class="marquee-item">Selective Roster <span class="msep">💋</span></span>
+      <span class="marquee-item">Real Distribution <span class="msep">💋</span></span>
+      <!-- duplicate -->
+      <span class="marquee-item">Professional Production <span class="msep">💋</span></span>
+      <span class="marquee-item">50K+ Eyes on Your Face <span class="msep">💋</span></span>
+      <span class="marquee-item">Curated Women Only <span class="msep">💋</span></span>
+      <span class="marquee-item">BBO Stamped <span class="msep">💋</span></span>
+      <span class="marquee-item">No Cost to You <span class="msep">💋</span></span>
+      <span class="marquee-item">Editorial Quality Content <span class="msep">💋</span></span>
+      <span class="marquee-item">Selective Roster <span class="msep">💋</span></span>
+      <span class="marquee-item">Real Distribution <span class="msep">💋</span></span>
+    </div>
+  </div>
+
+
+  <!-- ══ WHAT IS IT ══ -->
+  <section class="what-section">
+    <div class="what-inner reveal">
+      <div class="eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span class="eyebrow-label">What This Is</span>
+      </div>
+
+      <h2 class="section-title">BBO<br>STAMPED</h2>
+
+      <p class="body-copy">
+        We pull up to the best restaurants in NY and NJ with a full production crew —
+        photographer, videographer, and a small group of hand-selected women.
+        The content lives on BBO. Your face reaches 50,000+ impressions across
+        our Instagram, TikTok, YouTube, and beyond. This is not a dinner party.
+        This is a content placement with real distribution behind it.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-num">21K+</div>
+          <div class="stat-label">IG Followers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">1.5M</div>
+          <div class="stat-label">90-Day Reach</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">1.1M+</div>
+          <div class="stat-label">Min Watch Time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Eyes Per Drop</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ PERKS ══ -->
+  <section class="perks-section">
+    <div class="perks-inner reveal">
+      <div class="eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span class="eyebrow-label">Your Seat Includes</span>
+      </div>
+
+      <h2 class="section-title">WHAT<br>YOU GET</h2>
+
+      <div class="perks-grid">
+        <div class="perk">
+          <div class="perk-bar"></div>
+          <span class="perk-icon">📸</span>
+          <div class="perk-title">Full Production Crew</div>
+          <div class="perk-desc">Professional photographer and videographer on site. Editorial-level quality — not phone content.</div>
+        </div>
+
+        <div class="perk">
+          <div class="perk-bar"></div>
+          <span class="perk-icon">📡</span>
+          <div class="perk-title">Real Distribution</div>
+          <div class="perk-desc">Your content runs across BBO's full platform stack — Instagram, TikTok, YouTube, and more. 50K+ eyes minimum per drop.</div>
+        </div>
+
+        <div class="perk">
+          <div class="perk-bar"></div>
+          <span class="perk-icon">💋</span>
+          <div class="perk-title">BBO Stamped</div>
+          <div class="perk-desc">Featured on a brand that reaches Black and Latino women 20–44 across NY, NJ, Philly, and the DMV.</div>
+        </div>
+
+        <div class="perk">
+          <div class="perk-bar"></div>
+          <span class="perk-icon">🎯</span>
+          <div class="perk-title">Zero Cost to You</div>
+          <div class="perk-desc">No ticket. No fee. Show up, look right, bring the energy. We handle everything else.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ WHO WE WANT ══ -->
+  <section class="criteria-section">
+    <div class="criteria-inner reveal">
+      <div class="eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span class="eyebrow-label">Who We're Looking For</span>
+      </div>
+
+      <h2 class="section-title">THE<br>STANDARD</h2>
+
+      <div class="criteria-list">
+        <div class="criteria-item">
+          <div class="c-icon">
+            <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>Content-Minded</strong>
+            You understand this is a production, not just a dinner. You show up intentional and camera-ready.
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="c-icon">
+            <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>The Look Is Right</strong>
+            You fit the BBO aesthetic — confident, curated, and camera-ready without being told twice.
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="c-icon">
+            <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>You Have a Point of View</strong>
+            Opinions, personality, presence. The camera needs to feel you. Wallflowers need not apply.
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="c-icon">
+            <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>NYC / NJ / Philly / DMV</strong>
+            You can actually pull up. Local only — we move fast and don't wait on travel.
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="c-icon c-no">
+            <svg viewBox="0 0 10 10"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>Not the Move</strong>
+            If you're just here for a free meal, this isn't for you. We can tell the difference.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ FORM ══ -->
+  <section class="form-section" id="apply">
+    <div class="form-inner">
+
+      <div class="eyebrow reveal">
+        <div class="eyebrow-dot"></div>
+        <span class="eyebrow-label">Applications Open</span>
+      </div>
+
+      <h2 class="section-title reveal">REQUEST<br>A SEAT</h2>
+
+      <p class="form-intro reveal">
+        We review every submission personally. Seats are limited and the selection is deliberate.
+        If you're chosen, you'll hear from us via Instagram DM within 5–7 days.
+      </p>
+
+      <div id="form-wrap">
+
+        <div class="field reveal">
+          <label for="f-name">Full Name *</label>
+          <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="off" />
+          <div class="field-error" id="err-name">Name is required.</div>
+        </div>
+
+        <div class="field reveal">
+          <label for="f-ig">Instagram Handle *</label>
+          <input type="text" id="f-ig" name="instagram" placeholder="@yourhandle" autocomplete="off" />
+          <div class="field-error" id="err-ig">Instagram handle is required.</div>
+        </div>
+
+        <div class="field reveal">
+          <label for="f-phone">Phone Number *</label>
+          <input type="tel" id="f-phone" name="phone" placeholder="(201) 555-0100" autocomplete="off" />
+          <div class="field-error" id="err-phone">Phone number is required.</div>
+        </div>
+
+        <div class="field reveal">
+          <label for="f-email">Email Address *</label>
+          <input type="email" id="f-email" name="email" placeholder="you@email.com" autocomplete="off" />
+          <div class="field-error" id="err-email">Email address is required.</div>
+        </div>
+
+        <div class="field reveal">
+          <label for="f-city">City *</label>
+          <input type="text" id="f-city" name="city" placeholder="Your city" autocomplete="off" />
+          <div class="field-error" id="err-city">City is required.</div>
+        </div>
+
+        <div class="field reveal">
+          <label for="f-state">State *</label>
+          <select id="f-state" name="state">
+            <option value="" disabled selected>Select your state</option>
+            <option>NJ</option>
+            <option>NY</option>
+            <option>PA</option>
+            <option>MD</option>
+            <option>DC</option>
+            <option>CT</option>
+            <option>DE</option>
+            <option>VA</option>
+            <option>Other</option>
+          </select>
+          <div class="field-error" id="err-state">Please select your state.</div>
+        </div>
+
+        <div class="field reveal">
+          <label for="f-why">Why do you belong at a BBO table? *</label>
+          <textarea id="f-why" name="why_you" placeholder="Be specific. Generic answers get skipped." maxlength="400"></textarea>
+          <div class="char-count"><span id="why-count">0</span> / 400</div>
+          <div class="field-error" id="err-why">This field is required.</div>
+        </div>
+
+        <!-- Honeypot -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <div class="form-submit reveal">
+          <button type="button" class="btn btn-pink" id="submit-btn" onclick="handleSubmit()">
+            Submit My Application
+          </button>
+        </div>
+
+        <p class="form-note reveal">
+          Selected applicants are contacted via Instagram DM only.<br>
+          No follow required. We'll find you.
+        </p>
+
+      </div><!-- /form-wrap -->
+
+      <!-- SUCCESS -->
+      <div class="success-state" id="success-state">
+        <div class="success-icon">💋</div>
+        <h3>YOU'RE IN<br><span>THE QUEUE</span></h3>
+        <p>
+          Application received.<br>
+          If you're selected, we'll slide into your DMs within 5–7 days.<br>
+          Keep your requests open. Stay certified.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-inner">
+
+      <div>
+        <div class="footer-logo">BAD B<em>*</em>TCHES ONLY 💋</div>
+        <div class="footer-tagline">Standards &amp; Motion · Est. Newark, NJ</div>
+      </div>
+
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="https://www.instagram.com/dabboshow" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://bbouniverse.com" target="_blank" rel="noopener">Shop BBO</a>
+        <a href="#apply">Apply Now</a>
+      </nav>
+
+      <div class="footer-bottom">
+        <p>© 2025 Bad B*tches Only. All rights reserved.</p>
+        <p>@DABBOSHOW · BBOUNIVERSE.COM</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ══ JS ══ -->
+  <script>
+    /* char counters */
+    document.getElementById('f-why').addEventListener('input', function () {
+      document.getElementById('why-count').textContent = this.value.length;
+    });
+
+    /* scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* form submit */
+    async function handleSubmit() {
+      document.querySelectorAll('.field-error').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+
+      const f = {
+        name:  document.getElementById('f-name'),
+        ig:    document.getElementById('f-ig'),
+        phone: document.getElementById('f-phone'),
+        email: document.getElementById('f-email'),
+        city:  document.getElementById('f-city'),
+        state: document.getElementById('f-state'),
+        why:   document.getElementById('f-why'),
+      };
+
+      const errs = { name:'err-name', ig:'err-ig', phone:'err-phone', email:'err-email', city:'err-city', state:'err-state', why:'err-why' };
+
+      let valid = true, firstErr = null;
+
+      for (const [k, el] of Object.entries(f)) {
+        if (!el.value.trim()) {
+          el.classList.add('has-error');
+          document.getElementById(errs[k]).style.display = 'block';
+          if (!firstErr) firstErr = el;
+          valid = false;
+        }
+      }
+
+      if (!valid) {
+        shake(document.getElementById('submit-btn'));
+        firstErr && firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = 'Sending…';
+      btn.style.opacity = '0.65';
+      btn.disabled = true;
+
+      const data = new FormData();
+      data.append('name',      f.name.value.trim());
+      data.append('instagram', f.ig.value.trim());
+      data.append('phone',     f.phone.value.trim());
+      data.append('email',     f.email.value.trim());
+      data.append('city',      f.city.value.trim());
+      data.append('state',     f.state.value);
+      data.append('why_you',   f.why.value.trim());
+
+      try {
+        const res = await fetch('https://formspree.io/f/meepjonj', {
+          method: 'POST', body: data,
+          headers: { 'Accept': 'application/json' },
+        });
+
+        if (res.ok) {
+          document.getElementById('form-wrap').style.display = 'none';
+          const s = document.getElementById('success-state');
+          s.style.display = 'block';
+          s.style.animation = 'riseIn 0.65s ease forwards';
+          s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          reset(btn); alert('Something went wrong. Please try again.');
+        }
+      } catch {
+        reset(btn); alert('Network error. Check your connection and try again.');
+      }
+    }
+
+    function reset(btn) {
+      btn.textContent = 'Submit My Application';
+      btn.style.opacity = '1'; btn.disabled = false;
+    }
+
+    function shake(el) {
+      [-7,7,-5,5,-3,0].forEach((x, i) => setTimeout(() => el.style.transform = `translateX(${x}px)`, i * 55));
+    }
+  </script>
+
+</body>
+</html>
