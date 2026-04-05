@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
   <style>
     /* ─────────────────────────────────────────
        TOKENS — Soft Power palette
@@ -31,10 +29,8 @@
       --border:         rgba(240,232,220,0.07);
       --border-mid:     rgba(240,232,220,0.12);
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-
     body {
       background: var(--obsidian);
       color: var(--cream);
@@ -42,7 +38,6 @@
       font-weight: 300;
       overflow-x: hidden;
     }
-
     /* grain */
     body::after {
       content: '';
@@ -50,10 +45,6 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 9000;
     }
-
-    /* ─────────────────────────────────────────
-       NAV
-    ───────────────────────────────────────── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -61,28 +52,20 @@
       background: linear-gradient(to bottom, rgba(8,8,8,0.97) 0%, transparent 100%);
       transition: border-color 0.3s ease;
     }
-
     .nav.scrolled { border-bottom: 1px solid var(--rose-border); }
-
     .nav-logo {
       font-family: 'Cormorant Garamond', serif;
       font-size: 17px; font-weight: 500;
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--cream);
     }
-
     .nav-logo em { color: var(--rose); font-style: italic; }
-
     .nav-handle {
       font-family: 'Barlow', sans-serif;
       font-size: 10px; font-weight: 500;
       letter-spacing: 0.25em; text-transform: uppercase;
       color: var(--cream-3);
     }
-
-    /* ─────────────────────────────────────────
-       HERO — cinematic, oversized serif
-    ───────────────────────────────────────── */
     .hero {
       min-height: 100svh;
       display: flex; flex-direction: column;
@@ -91,8 +74,6 @@
       position: relative; overflow: hidden;
       background: var(--obsidian);
     }
-
-    /* cinematic gradient background */
     .hero::before {
       content: '';
       position: absolute; inset: 0;
@@ -102,42 +83,33 @@
         radial-gradient(ellipse 80%  80% at 50%  50%,   rgba(196,82,122,0.03) 0%, transparent 70%);
       pointer-events: none;
     }
-
-    /* bottom fade into next section */
     .hero-floor {
       position: absolute; bottom: 0; left: 0; right: 0; height: 160px;
       background: linear-gradient(to bottom, transparent 0%, var(--obsidian) 100%);
       pointer-events: none; z-index: 1;
     }
-
-    /* decorative vertical line — editorial detail */
     .hero-line {
       position: absolute; top: 0; right: 80px;
       width: 1px; height: 45%;
       background: linear-gradient(to bottom, transparent 0%, var(--rose) 50%, transparent 100%);
       opacity: 0.35;
     }
-
     .hero-eyebrow {
       position: relative; z-index: 2;
       display: inline-flex; align-items: center; gap: 12px;
       margin-bottom: 28px;
       opacity: 0; animation: riseIn 0.7s ease forwards 0.15s;
     }
-
     .eyebrow-rule {
       width: 28px; height: 1px;
       background: var(--rose);
     }
-
     .eyebrow-label {
       font-family: 'Barlow', sans-serif;
       font-size: 10px; font-weight: 600;
       letter-spacing: 0.35em; text-transform: uppercase;
       color: var(--rose);
     }
-
-    /* OVERSIZED SERIF headline — Cormorant Garamond */
     .hero-headline {
       position: relative; z-index: 2;
       font-family: 'Cormorant Garamond', serif;
@@ -148,21 +120,17 @@
       color: var(--cream);
       opacity: 0; animation: riseIn 0.9s cubic-bezier(.16,1,.3,1) forwards 0.3s;
     }
-
     .hero-headline .accent {
       color: var(--rose);
       font-style: italic;
     }
-
     .hero-headline .block { display: block; }
-
     .hero-rule {
       position: relative; z-index: 2;
       width: 36px; height: 1px;
       background: var(--rose); margin: 24px 0;
       opacity: 0; animation: riseIn 0.5s ease forwards 0.55s;
     }
-
     .hero-sub {
       position: relative; z-index: 2;
       font-size: clamp(14px, 3.5vw, 16px);
@@ -171,33 +139,25 @@
       max-width: 360px;
       opacity: 0; animation: riseIn 0.7s ease forwards 0.68s;
     }
-
     .hero-cta {
       position: relative; z-index: 2;
       margin-top: 36px;
       display: flex; align-items: center; gap: 24px;
       opacity: 0; animation: riseIn 0.7s ease forwards 0.82s;
     }
-
     .hero-cta-note {
       font-size: 10px; font-weight: 500;
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--cream-4);
     }
-
-    /* ─────────────────────────────────────────
-       SHARED
-    ───────────────────────────────────────── */
     .eyebrow {
       display: inline-flex; align-items: center; gap: 12px;
       margin-bottom: 18px;
     }
-
     .eyebrow-rule-sm {
       width: 20px; height: 1px;
       background: var(--rose); flex-shrink: 0;
     }
-
     .section-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(48px, 13vw, 88px);
@@ -207,19 +167,16 @@
       color: var(--cream);
       margin-bottom: 24px;
     }
-
     .section-title em {
       font-style: italic;
       color: var(--rose);
     }
-
     .body-copy {
       font-size: 15px;
       font-weight: 300;
       line-height: 1.85;
       color: var(--cream-2);
     }
-
     .btn {
       display: inline-block;
       font-family: 'Barlow', sans-serif;
@@ -231,45 +188,34 @@
       transition: all 0.25s ease;
       white-space: nowrap;
     }
-
     .btn-rose {
       background: var(--rose); color: var(--cream);
     }
-
     .btn-rose:hover {
       background: var(--rose-dim);
       transform: translateY(-2px);
       box-shadow: 0 16px 48px rgba(196,82,122,0.3);
     }
-
     .btn-ghost {
       background: transparent;
       border: 1px solid var(--border-mid);
       color: var(--cream-2);
     }
-
     .btn-ghost:hover {
       border-color: var(--rose-border);
       color: var(--cream);
     }
-
-    /* ─────────────────────────────────────────
-       MARQUEE
-    ───────────────────────────────────────── */
     .marquee-section {
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       background: var(--obsidian-2);
       overflow: hidden; padding: 16px 0;
     }
-
     .marquee-track {
       display: flex; white-space: nowrap;
       animation: ticker 30s linear infinite;
     }
-
     .marquee-track:hover { animation-play-state: paused; }
-
     .marquee-item {
       font-family: 'Cormorant Garamond', serif;
       font-size: 20px; font-weight: 400;
@@ -277,41 +223,30 @@
       color: var(--cream-2);
       padding: 0 32px; flex-shrink: 0;
     }
-
     .marquee-item.pink {
       color: var(--rose);
       font-style: italic;
     }
-
     .msep {
       color: var(--rose);
       font-style: normal;
       margin-left: 4px;
     }
-
     @keyframes ticker {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
-
-    /* ─────────────────────────────────────────
-       WHAT IS IT — social currency stats
-    ───────────────────────────────────────── */
     .what-section {
       background: var(--obsidian-2);
       padding: 88px 28px;
     }
-
     .what-inner { max-width: 680px; margin: 0 auto; }
-
-    /* stats as social currency — horizontal strip */
     .stat-strip {
       margin-top: 52px;
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 1px;
       border: 1px solid var(--border);
     }
-
     .stat-card {
       background: var(--obsidian-3);
       padding: 28px 24px 24px;
@@ -319,7 +254,6 @@
       overflow: hidden;
       transition: background 0.2s ease;
     }
-
     .stat-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0;
@@ -328,14 +262,10 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-
     .stat-card:hover { background: var(--obsidian-4); }
     .stat-card:hover::before { opacity: 1; }
-
-    /* hero stat — 1.5M */
     .stat-card.stat-hero::before { opacity: 1; }
     .stat-card.stat-hero { background: var(--obsidian-4); }
-
     .stat-num {
       font-family: 'Cormorant Garamond', serif;
       font-size: 56px; font-weight: 300;
@@ -343,37 +273,27 @@
       margin-bottom: 6px;
       letter-spacing: -0.02em;
     }
-
     .stat-card.stat-hero .stat-num {
       font-size: 68px;
       color: var(--rose);
     }
-
     .stat-label {
       font-size: 10px; font-weight: 600;
       letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--cream-3);
     }
-
     .stat-context {
       font-size: 11px; font-weight: 300;
       color: var(--cream-4);
       margin-top: 4px;
       letter-spacing: 0.04em;
     }
-
-    /* ─────────────────────────────────────────
-       PERKS — asymmetrical, negative space, price-anchored
-    ───────────────────────────────────────── */
     .perks-section {
       background: var(--obsidian);
       padding: 88px 28px;
       border-top: 1px solid var(--border);
     }
-
     .perks-inner { max-width: 680px; margin: 0 auto; }
-
-    /* asymmetrical layout — featured card spans full width */
     .perks-grid {
       margin-top: 48px;
       display: grid;
@@ -381,17 +301,13 @@
       grid-template-rows: auto auto;
       gap: 1px;
     }
-
     .perk {
       background: var(--obsidian-2);
       padding: 36px 28px;
       position: relative;
       transition: background 0.25s ease;
     }
-
     .perk:hover { background: var(--obsidian-3); }
-
-    /* price anchor card — Full Crew spans full width on top */
     .perk.perk-anchor {
       grid-column: 1 / -1;
       display: grid;
@@ -401,21 +317,14 @@
       background: var(--obsidian-3);
       border-bottom: 1px solid var(--border);
     }
-
     .perk.perk-anchor:hover { background: var(--obsidian-4); }
-
-    .perk-anchor-left {}
-
     .perk-anchor-right {
       border-left: 1px solid var(--border);
       padding-left: 32px;
     }
-
-    /* Real Reach — featured with rose left border */
     .perk.perk-featured {
       border-left: 1px solid var(--rose);
     }
-
     .perk-num {
       font-family: 'Cormorant Garamond', serif;
       font-size: 11px; font-weight: 500;
@@ -424,7 +333,6 @@
       margin-bottom: 18px; display: block;
       opacity: 0.8;
     }
-
     .perk-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: 22px; font-weight: 500;
@@ -433,14 +341,11 @@
       margin-bottom: 10px;
       line-height: 1.2;
     }
-
     .perk-desc {
       font-size: 13px; font-weight: 300;
       line-height: 1.72;
       color: var(--cream-2);
     }
-
-    /* production value tag — price anchoring */
     .perk-value-tag {
       display: inline-block;
       font-size: 10px; font-weight: 600;
@@ -450,90 +355,66 @@
       padding: 5px 12px;
       margin-top: 14px;
     }
-
-    /* ─────────────────────────────────────────
-       CRITERIA
-    ───────────────────────────────────────── */
     .criteria-section {
       background: var(--obsidian-2);
       padding: 88px 28px;
       border-top: 1px solid var(--border);
     }
-
     .criteria-inner { max-width: 680px; margin: 0 auto; }
-
     .criteria-list {
       margin-top: 40px;
       display: flex; flex-direction: column; gap: 1px;
     }
-
     .criteria-item {
       display: flex; align-items: flex-start; gap: 20px;
       background: var(--obsidian-3);
       padding: 22px 24px;
       transition: background 0.2s ease;
     }
-
     .criteria-item:hover { background: var(--obsidian-4); }
-
     .criteria-item.criteria-stop {
       background: var(--obsidian-4);
       margin-top: 12px;
       border-top: 1px solid var(--border-mid);
     }
-
     .criteria-item.criteria-stop:hover { background: var(--obsidian-5); }
-
     .c-icon {
       width: 20px; height: 20px; border-radius: 50%;
       background: var(--rose); flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
       margin-top: 3px;
     }
-
     .c-icon svg {
       width: 9px; height: 9px;
       stroke: #fff; stroke-width: 2.5; fill: none;
     }
-
     .c-icon.c-no {
       background: var(--obsidian-5);
       border: 1px solid var(--border-mid);
     }
-
     .c-icon.c-no svg { stroke: var(--cream-3); }
-
     .criteria-text {
       font-size: 14px; font-weight: 300;
       line-height: 1.65; color: var(--cream-2);
     }
-
     .criteria-text strong {
       font-family: 'Barlow', sans-serif;
       color: var(--cream); font-weight: 600;
       display: block; margin-bottom: 4px;
       font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
     }
-
-    /* ─────────────────────────────────────────
-       FORM — velvet rope energy
-    ───────────────────────────────────────── */
     .form-section {
       background: var(--obsidian);
       padding: 88px 28px 100px;
       border-top: 1px solid var(--rose-border);
     }
-
     .form-inner { max-width: 520px; margin: 0 auto; }
-
     .form-intro {
       font-size: 14px; font-weight: 300;
       line-height: 1.8; color: var(--cream-2);
       margin-top: 16px; margin-bottom: 48px;
     }
-
     .field { margin-bottom: 20px; }
-
     .field label {
       display: block;
       font-size: 9px; font-weight: 600;
@@ -541,7 +422,6 @@
       color: var(--cream-3);
       margin-bottom: 10px;
     }
-
     .field input,
     .field select,
     .field textarea {
@@ -557,70 +437,53 @@
       transition: border-color 0.2s ease, background 0.2s ease;
       -webkit-appearance: none; appearance: none;
     }
-
     .field input:focus,
     .field select:focus,
     .field textarea:focus {
       border-color: var(--rose);
       background: var(--obsidian-3);
     }
-
     .field input::placeholder,
     .field textarea::placeholder { color: var(--cream-4); }
-
     .field select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c4527a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 18px center;
       padding-right: 44px; cursor: pointer;
     }
-
     .field select option { background: #141414; color: var(--cream); }
     .field textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
-
     .field-row {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 12px; margin-bottom: 20px;
     }
-
     .field-row .field { margin-bottom: 0; }
-
     .field-error {
       display: none;
       font-size: 10px; font-weight: 500;
       letter-spacing: 0.08em; color: var(--rose);
       margin-top: 6px;
     }
-
     .field input.has-error,
     .field select.has-error,
     .field textarea.has-error { border-color: var(--rose); }
-
     .char-count {
       font-size: 10px; color: var(--cream-4);
       text-align: right; margin-top: 5px;
     }
-
     .form-submit { margin-top: 36px; }
-
     .form-submit .btn {
       width: 100%; text-align: center; padding: 20px; font-size: 11px;
     }
-
     .form-note {
       font-size: 11px; font-weight: 300;
       color: var(--cream-3);
       text-align: center; margin-top: 20px;
       line-height: 1.7; letter-spacing: 0.05em;
     }
-
-    /* ─────────────────────────────────────────
-       SUCCESS
-    ───────────────────────────────────────── */
     .success-state {
       display: none; text-align: center; padding: 60px 0;
     }
-
     .success-icon {
       width: 64px; height: 64px; border-radius: 50%;
       background: var(--rose-faint);
@@ -628,53 +491,41 @@
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 28px; font-size: 26px;
     }
-
     .success-state h3 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 52px; font-weight: 300;
       line-height: 0.92;
       color: var(--cream); margin-bottom: 20px;
     }
-
     .success-state h3 em {
       color: var(--rose); font-style: italic;
     }
-
     .success-state p {
       font-size: 14px; font-weight: 300;
       color: var(--cream-2);
       line-height: 1.8; max-width: 300px; margin: 0 auto;
     }
-
-    /* ─────────────────────────────────────────
-       FOOTER
-    ───────────────────────────────────────── */
     footer {
       background: var(--obsidian-2);
       border-top: 1px solid var(--rose-border);
       padding: 52px 28px 40px;
     }
-
     .footer-inner {
       max-width: 680px; margin: 0 auto;
       display: flex; flex-direction: column; gap: 28px;
     }
-
     .footer-logo {
       font-family: 'Cormorant Garamond', serif;
       font-size: 28px; font-weight: 400;
       letter-spacing: 0.1em;
       color: var(--cream); margin-bottom: 8px;
     }
-
     .footer-logo em { color: var(--rose); font-style: italic; }
-
     .footer-tagline {
       font-size: 10px; font-weight: 600;
       letter-spacing: 0.25em; text-transform: uppercase;
       color: var(--cream-3);
     }
-
     .footer-statement {
       font-family: 'Cormorant Garamond', serif;
       font-size: 20px; font-weight: 300;
@@ -682,52 +533,36 @@
       color: var(--cream-2);
       font-style: italic;
     }
-
     .footer-statement span { color: var(--rose); font-style: normal; }
-
     .footer-links {
       display: flex; flex-wrap: wrap; gap: 24px;
     }
-
     .footer-links a {
       font-size: 11px; font-weight: 500;
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--cream-2); text-decoration: none;
       transition: color 0.2s ease;
     }
-
     .footer-links a:hover { color: var(--rose); }
-
     .footer-bottom {
       padding-top: 24px;
       border-top: 1px solid var(--border);
       display: flex; flex-wrap: wrap;
       justify-content: space-between; gap: 8px;
     }
-
     .footer-bottom p {
       font-size: 11px; color: var(--cream-3);
       letter-spacing: 0.06em;
     }
-
-    /* ─────────────────────────────────────────
-       ANIMATIONS
-    ───────────────────────────────────────── */
     @keyframes riseIn {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     .reveal {
       opacity: 0; transform: translateY(16px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-
     .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ─────────────────────────────────────────
-       RESPONSIVE
-    ───────────────────────────────────────── */
     @media (max-width: 560px) {
       .hero { padding: 0 24px 72px; }
       .perk.perk-anchor {
@@ -743,64 +578,40 @@
       .perks-grid { grid-template-columns: 1fr; }
       .hero-cta { flex-direction: column; align-items: flex-start; gap: 14px; }
       .footer-bottom { flex-direction: column; }
-      .what-section,
-      .perks-section,
-      .criteria-section,
-      .form-section,
-      footer { padding-left: 20px; padding-right: 20px; }
     }
-
     @media (min-width: 768px) {
       .stat-strip { grid-template-columns: repeat(4, 1fr); }
     }
   </style>
-
 </head>
 <body>
-
-  <!-- NAV -->
-
   <nav class="nav" id="site-nav">
     <div class="nav-logo">Bad B<em>*</em>tches Only</div>
     <span class="nav-handle">@dabboshow</span>
   </nav>
-
-  <!-- ══ HERO ══ -->
-
   <section class="hero">
     <div class="hero-line" aria-hidden="true"></div>
     <div class="hero-floor" aria-hidden="true"></div>
-
-```
-<div class="hero-eyebrow">
-  <div class="eyebrow-rule"></div>
-  <span class="eyebrow-label">BBO Stamped — Casting Now Open</span>
-</div>
-
-<h1 class="hero-headline">
-  <span class="block">Not Every</span>
-  <span class="block">Girl Gets</span>
-  <span class="block accent">A Seat.</span>
-</h1>
-
-<div class="hero-rule"></div>
-
-<p class="hero-sub">
-  Small table. Serious production.<br>
-  Your face on 50K+ screens.<br>
-  We don't take everyone. Apply if you're built for it.
-</p>
-
-<div class="hero-cta">
-  <a href="#apply" class="btn btn-rose">Request a Seat</a>
-  <span class="hero-cta-note">Limited selections</span>
-</div>
-```
-
+    <div class="hero-eyebrow">
+      <div class="eyebrow-rule"></div>
+      <span class="eyebrow-label">BBO Stamped — Casting Now Open</span>
+    </div>
+    <h1 class="hero-headline">
+      <span class="block">Not Every</span>
+      <span class="block">Girl Gets</span>
+      <span class="block accent">A Seat.</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">
+      Small table. Serious production.<br>
+      Your face on 50K+ screens.<br>
+      We don't take everyone. Apply if you're built for it.
+    </p>
+    <div class="hero-cta">
+      <a href="#apply" class="btn btn-rose">Request a Seat</a>
+      <span class="hero-cta-note">Limited selections</span>
+    </div>
   </section>
-
-  <!-- ══ MARQUEE ══ -->
-
   <div class="marquee-section" aria-hidden="true">
     <div class="marquee-track">
       <span class="marquee-item">Professional Production <span class="msep">✦</span></span>
@@ -811,7 +622,6 @@
       <span class="marquee-item">Editorial Quality <span class="msep">✦</span></span>
       <span class="marquee-item">Selective Roster <span class="msep">✦</span></span>
       <span class="marquee-item pink">Real Distribution <span class="msep">✦</span></span>
-      <!-- duplicate -->
       <span class="marquee-item">Professional Production <span class="msep">✦</span></span>
       <span class="marquee-item pink">50K+ Eyes Per Drop <span class="msep">✦</span></span>
       <span class="marquee-item">Curated Women Only <span class="msep">✦</span></span>
@@ -822,329 +632,251 @@
       <span class="marquee-item pink">Real Distribution <span class="msep">✦</span></span>
     </div>
   </div>
-
-  <!-- ══ WHAT IS IT — Social Currency Stats ══ -->
-
   <section class="what-section">
     <div class="what-inner reveal">
       <div class="eyebrow">
         <div class="eyebrow-rule-sm"></div>
         <span class="eyebrow-label">What This Is</span>
       </div>
-
-```
-  <h2 class="section-title">BBO<br><em>Stamped</em></h2>
-
-  <p class="body-copy">
-    Full production crew. Real restaurants. Hand-selected women.<br>
-    Your face runs across BBO's full platform stack — Instagram, TikTok, YouTube —
-    in front of 50K+ eyes per drop.
-  </p>
-
-  <div class="stat-strip">
-    <div class="stat-card">
-      <div class="stat-num">21K+</div>
-      <div class="stat-label">IG Followers</div>
-      <div class="stat-context">and growing</div>
+      <h2 class="section-title">BBO<br><em>Stamped</em></h2>
+      <p class="body-copy">
+        Full production crew. Real restaurants. Hand-selected women.<br>
+        Your face runs across BBO's full platform stack — Instagram, TikTok, YouTube —
+        in front of 50K+ eyes per drop.
+      </p>
+      <div class="stat-strip">
+        <div class="stat-card">
+          <div class="stat-num">21K+</div>
+          <div class="stat-label">IG Followers</div>
+          <div class="stat-context">and growing</div>
+        </div>
+        <div class="stat-card stat-hero">
+          <div class="stat-num">1.5M</div>
+          <div class="stat-label">90-Day Reach</div>
+          <div class="stat-context">across all platforms</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">1.1M+</div>
+          <div class="stat-label">Minutes Watched</div>
+          <div class="stat-context">last 90 days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Eyes Per Drop</div>
+          <div class="stat-context">minimum per placement</div>
+        </div>
+      </div>
     </div>
-    <div class="stat-card stat-hero">
-      <div class="stat-num">1.5M</div>
-      <div class="stat-label">90-Day Reach</div>
-      <div class="stat-context">across all platforms</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">1.1M+</div>
-      <div class="stat-label">Minutes Watched</div>
-      <div class="stat-context">last 90 days</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">50K+</div>
-      <div class="stat-label">Eyes Per Drop</div>
-      <div class="stat-context">minimum per placement</div>
-    </div>
-  </div>
-</div>
-```
-
   </section>
-
-  <!-- ══ PERKS — Asymmetrical, Price-Anchored ══ -->
-
   <section class="perks-section">
     <div class="perks-inner reveal">
       <div class="eyebrow">
         <div class="eyebrow-rule-sm"></div>
         <span class="eyebrow-label">Your Seat Includes</span>
       </div>
-
-```
-  <h2 class="section-title">What You<br><em>Receive</em></h2>
-
-  <div class="perks-grid">
-
-    <!-- PRICE ANCHOR — Full Crew + Zero Cost side by side -->
-    <div class="perk perk-anchor">
-      <div class="perk-anchor-left">
-        <span class="perk-num">01</span>
-        <div class="perk-title">Full Production Crew</div>
-        <div class="perk-desc">Professional photographer and videographer on site. This is editorial-level production — the kind brands pay $5K+ for.</div>
-        <div class="perk-value-tag">Est. Value $5,000+</div>
+      <h2 class="section-title">What You<br><em>Receive</em></h2>
+      <div class="perks-grid">
+        <div class="perk perk-anchor">
+          <div class="perk-anchor-left">
+            <span class="perk-num">01</span>
+            <div class="perk-title">Full Production Crew</div>
+            <div class="perk-desc">Professional photographer and videographer on site. This is editorial-level production — the kind brands pay $5K+ for.</div>
+            <div class="perk-value-tag">Est. Value $5,000+</div>
+          </div>
+          <div class="perk-anchor-right">
+            <span class="perk-num">04</span>
+            <div class="perk-title">Your Cost</div>
+            <div class="perk-desc">Zero. You show up, look right, bring the energy. Everything else is handled.</div>
+            <div class="perk-value-tag">$0 to You</div>
+          </div>
+        </div>
+        <div class="perk perk-featured">
+          <span class="perk-num">02</span>
+          <div class="perk-title">Real Reach</div>
+          <div class="perk-desc">50K+ eyes per drop across Instagram, TikTok, and YouTube. Not impressions. Eyes.</div>
+        </div>
+        <div class="perk">
+          <span class="perk-num">03</span>
+          <div class="perk-title">BBO Stamped</div>
+          <div class="perk-desc">Placed on a brand reaching Black and Latino women 20–44 across the East Coast.</div>
+        </div>
       </div>
-      <div class="perk-anchor-right">
-        <span class="perk-num">04</span>
-        <div class="perk-title">Your Cost</div>
-        <div class="perk-desc">Zero. You show up, look right, bring the energy. Everything else is handled.</div>
-        <div class="perk-value-tag">$0 to You</div>
-      </div>
     </div>
-
-    <!-- Real Reach — featured -->
-    <div class="perk perk-featured">
-      <span class="perk-num">02</span>
-      <div class="perk-title">Real Reach</div>
-      <div class="perk-desc">50K+ eyes per drop across Instagram, TikTok, and YouTube. Not impressions. Eyes.</div>
-    </div>
-
-    <!-- BBO Stamped -->
-    <div class="perk">
-      <span class="perk-num">03</span>
-      <div class="perk-title">BBO Stamped</div>
-      <div class="perk-desc">Placed on a brand reaching Black and Latino women 20–44 across the East Coast.</div>
-    </div>
-
-  </div>
-</div>
-```
-
   </section>
-
-  <!-- ══ THE STANDARD ══ -->
-
   <section class="criteria-section">
     <div class="criteria-inner reveal">
       <div class="eyebrow">
         <div class="eyebrow-rule-sm"></div>
         <span class="eyebrow-label">Who We're Looking For</span>
       </div>
-
-```
-  <h2 class="section-title">The<br><em>Standard</em></h2>
-
-  <div class="criteria-list">
-
-    <div class="criteria-item">
-      <div class="c-icon">
-        <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
-      </div>
-      <div class="criteria-text">
-        <strong>Content-Minded</strong>
-        You understand this is a production, not just a dinner. You show up intentional and camera-ready.
-      </div>
-    </div>
-
-    <div class="criteria-item">
-      <div class="c-icon">
-        <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
-      </div>
-      <div class="criteria-text">
-        <strong>The Look Is Right</strong>
-        You fit the BBO aesthetic — confident, curated, camera-ready without being told twice.
-      </div>
-    </div>
-
-    <div class="criteria-item">
-      <div class="c-icon">
-        <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
-      </div>
-      <div class="criteria-text">
-        <strong>You Have a Point of View</strong>
-        Opinions, personality, presence. The camera needs to feel you. Wallflowers need not apply.
-      </div>
-    </div>
-
-    <div class="criteria-item">
-      <div class="c-icon">
-        <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
-      </div>
-      <div class="criteria-text">
-        <strong>NYC / NJ / Philly / DMV</strong>
-        You can actually pull up. Local only — we move fast and don't wait on travel.
-      </div>
-    </div>
-
-    <div class="criteria-item criteria-stop">
-      <div class="c-icon c-no">
-        <svg viewBox="0 0 10 10"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
-      </div>
-      <div class="criteria-text">
-        <strong>Not the Move</strong>
-        If the production crew is background noise to your free meal — this isn't for you. We'll know.
+      <h2 class="section-title">The<br><em>Standard</em></h2>
+      <div class="criteria-list">
+        <div class="criteria-item">
+          <div class="c-icon">
+            <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>Content-Minded</strong>
+            You understand this is a production, not just a dinner. You show up intentional and camera-ready.
+          </div>
+        </div>
+        <div class="criteria-item">
+          <div class="c-icon">
+            <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>The Look Is Right</strong>
+            You fit the BBO aesthetic — confident, curated, camera-ready without being told twice.
+          </div>
+        </div>
+        <div class="criteria-item">
+          <div class="c-icon">
+            <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>You Have a Point of View</strong>
+            Opinions, personality, presence. The camera needs to feel you. Wallflowers need not apply.
+          </div>
+        </div>
+        <div class="criteria-item">
+          <div class="c-icon">
+            <svg viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>NYC / NJ / Philly / DMV</strong>
+            You can actually pull up. Local only — we move fast and don't wait on travel.
+          </div>
+        </div>
+        <div class="criteria-item criteria-stop">
+          <div class="c-icon c-no">
+            <svg viewBox="0 0 10 10"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
+          </div>
+          <div class="criteria-text">
+            <strong>Not the Move</strong>
+            If the production crew is background noise to your free meal — this isn't for you. We'll know.
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-</div>
-```
-
   </section>
-
-  <!-- ══ FORM — Digital Velvet Rope ══ -->
-
   <section class="form-section" id="apply">
     <div class="form-inner">
-
-```
-  <div class="eyebrow reveal">
-    <div class="eyebrow-rule-sm"></div>
-    <span class="eyebrow-label">By Application Only</span>
-  </div>
-
-  <h2 class="section-title reveal">Request<br><em>a Seat</em></h2>
-
-  <p class="form-intro reveal">
-    We read every submission. If you're selected, you'll be contacted directly.<br>
-    No follow required. Seats are few. Selection is deliberate.
-  </p>
-
-  <div id="form-wrap">
-
-    <div class="field reveal">
-      <label for="f-name">Full Name</label>
-      <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="off" />
-      <div class="field-error" id="err-name">Name is required.</div>
-    </div>
-
-    <div class="field reveal">
-      <label for="f-ig">Instagram Handle</label>
-      <input type="text" id="f-ig" name="instagram" placeholder="@yourhandle" autocomplete="off" />
-      <div class="field-error" id="err-ig">Instagram handle is required.</div>
-    </div>
-
-    <div class="field reveal">
-      <label for="f-phone">Phone Number</label>
-      <input type="tel" id="f-phone" name="phone" placeholder="(201) 555-0100" autocomplete="off" />
-      <div class="field-error" id="err-phone">Phone number is required.</div>
-    </div>
-
-    <div class="field reveal">
-      <label for="f-email">Email Address</label>
-      <input type="email" id="f-email" name="email" placeholder="you@email.com" autocomplete="off" />
-      <div class="field-error" id="err-email">Email address is required.</div>
-    </div>
-
-    <div class="field-row reveal">
-      <div class="field">
-        <label for="f-city">City</label>
-        <input type="text" id="f-city" name="city" placeholder="Your city" autocomplete="off" />
-        <div class="field-error" id="err-city">City is required.</div>
+      <div class="eyebrow reveal">
+        <div class="eyebrow-rule-sm"></div>
+        <span class="eyebrow-label">By Application Only</span>
       </div>
-      <div class="field">
-        <label for="f-state">State</label>
-        <select id="f-state" name="state">
-          <option value="" disabled selected>State</option>
-          <option>NJ</option>
-          <option>NY</option>
-          <option>PA</option>
-          <option>MD</option>
-          <option>DC</option>
-          <option>CT</option>
-          <option>DE</option>
-          <option>VA</option>
-          <option>Other</option>
-        </select>
-        <div class="field-error" id="err-state">Select a state.</div>
+      <h2 class="section-title reveal">Request<br><em>a Seat</em></h2>
+      <p class="form-intro reveal">
+        We read every submission. If you're selected, you'll be contacted directly.<br>
+        No follow required. Seats are few. Selection is deliberate.
+      </p>
+      <div id="form-wrap">
+        <div class="field reveal">
+          <label for="f-name">Full Name</label>
+          <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="off" />
+          <div class="field-error" id="err-name">Name is required.</div>
+        </div>
+        <div class="field reveal">
+          <label for="f-ig">Instagram Handle</label>
+          <input type="text" id="f-ig" name="instagram" placeholder="@yourhandle" autocomplete="off" />
+          <div class="field-error" id="err-ig">Instagram handle is required.</div>
+        </div>
+        <div class="field reveal">
+          <label for="f-phone">Phone Number</label>
+          <input type="tel" id="f-phone" name="phone" placeholder="(201) 555-0100" autocomplete="off" />
+          <div class="field-error" id="err-phone">Phone number is required.</div>
+        </div>
+        <div class="field reveal">
+          <label for="f-email">Email Address</label>
+          <input type="email" id="f-email" name="email" placeholder="you@email.com" autocomplete="off" />
+          <div class="field-error" id="err-email">Email address is required.</div>
+        </div>
+        <div class="field-row reveal">
+          <div class="field">
+            <label for="f-city">City</label>
+            <input type="text" id="f-city" name="city" placeholder="Your city" autocomplete="off" />
+            <div class="field-error" id="err-city">City is required.</div>
+          </div>
+          <div class="field">
+            <label for="f-state">State</label>
+            <select id="f-state" name="state">
+              <option value="" disabled selected>State</option>
+              <option>NJ</option>
+              <option>NY</option>
+              <option>PA</option>
+              <option>MD</option>
+              <option>DC</option>
+              <option>CT</option>
+              <option>DE</option>
+              <option>VA</option>
+              <option>Other</option>
+            </select>
+            <div class="field-error" id="err-state">Select a state.</div>
+          </div>
+        </div>
+        <div class="field reveal">
+          <label for="f-why">Why do you belong at a BBO table?</label>
+          <textarea id="f-why" name="why_you" placeholder="Be specific. Generic answers get skipped." maxlength="400"></textarea>
+          <div class="char-count"><span id="why-count">0</span> / 400</div>
+          <div class="field-error" id="err-why">This field is required.</div>
+        </div>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <div class="form-submit reveal">
+          <button type="button" class="btn btn-rose" id="submit-btn" onclick="handleSubmit()">
+            Drop My Application
+          </button>
+        </div>
+        <p class="form-note reveal">
+          Selected applicants are contacted via Instagram DM.<br>
+          We'll find you.
+        </p>
+      </div>
+      <div class="success-state" id="success-state">
+        <div class="success-icon">✦</div>
+        <h3>You're in<br><em>the queue.</em></h3>
+        <p>
+          Application received.<br>
+          If selected, we'll be in your DMs shortly.<br>
+          Keep your requests open.
+        </p>
       </div>
     </div>
-
-    <div class="field reveal">
-      <label for="f-why">Why do you belong at a BBO table?</label>
-      <textarea id="f-why" name="why_you" placeholder="Be specific. Generic answers get skipped." maxlength="400"></textarea>
-      <div class="char-count"><span id="why-count">0</span> / 400</div>
-      <div class="field-error" id="err-why">This field is required.</div>
-    </div>
-
-    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-
-    <div class="form-submit reveal">
-      <button type="button" class="btn btn-rose" id="submit-btn" onclick="handleSubmit()">
-        Drop My Application
-      </button>
-    </div>
-
-    <p class="form-note reveal">
-      Selected applicants are contacted via Instagram DM.<br>
-      We'll find you.
-    </p>
-
-  </div>
-
-  <div class="success-state" id="success-state">
-    <div class="success-icon">✦</div>
-    <h3>You're in<br><em>the queue.</em></h3>
-    <p>
-      Application received.<br>
-      If selected, we'll be in your DMs shortly.<br>
-      Keep your requests open.
-    </p>
-  </div>
-
-</div>
-```
-
   </section>
-
-  <!-- ══ FOOTER ══ -->
-
   <footer>
     <div class="footer-inner">
-
-```
-  <div>
-    <div class="footer-logo">Bad B<em>*</em>tches Only</div>
-    <div class="footer-tagline">Standards &amp; Motion · Est. Newark, NJ</div>
-  </div>
-
-  <div class="footer-statement">
-    Certified Outside. <span>Standards &amp; Motion.</span>
-  </div>
-
-  <nav class="footer-links">
-    <a href="https://www.instagram.com/dabboshow" target="_blank" rel="noopener">Instagram</a>
-    <a href="https://bbouniverse.com" target="_blank" rel="noopener">Shop BBO</a>
-  </nav>
-
-  <div class="footer-bottom">
-    <p>© 2025 Bad B*tches Only. All rights reserved.</p>
-    <p>@DABBOSHOW · BBOUNIVERSE.COM</p>
-  </div>
-
-</div>
-```
-
+      <div>
+        <div class="footer-logo">Bad B<em>*</em>tches Only</div>
+        <div class="footer-tagline">Standards &amp; Motion · Est. Newark, NJ</div>
+      </div>
+      <div class="footer-statement">
+        Certified Outside. <span>Standards &amp; Motion.</span>
+      </div>
+      <nav class="footer-links">
+        <a href="https://www.instagram.com/dabboshow" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://bbouniverse.com" target="_blank" rel="noopener">Shop BBO</a>
+      </nav>
+      <div class="footer-bottom">
+        <p>© 2025 Bad B*tches Only. All rights reserved.</p>
+        <p>@DABBOSHOW · BBOUNIVERSE.COM</p>
+      </div>
+    </div>
   </footer>
-
-  <!-- ══ JS ══ -->
-
   <script>
     window.addEventListener('scroll', () => {
       document.getElementById('site-nav').classList.toggle('scrolled', window.scrollY > 40);
     });
-
     document.getElementById('f-why').addEventListener('input', function () {
       document.getElementById('why-count').textContent = this.value.length;
     });
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
       });
     }, { threshold: 0.08 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
     async function handleSubmit() {
       document.querySelectorAll('.field-error').forEach(el => el.style.display = 'none');
       document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
-
       const f = {
         name:  document.getElementById('f-name'),
         ig:    document.getElementById('f-ig'),
@@ -1154,14 +886,11 @@
         state: document.getElementById('f-state'),
         why:   document.getElementById('f-why'),
       };
-
       const errs = {
         name:'err-name', ig:'err-ig', phone:'err-phone',
         email:'err-email', city:'err-city', state:'err-state', why:'err-why'
       };
-
       let valid = true, firstErr = null;
-
       for (const [k, el] of Object.entries(f)) {
         if (!el.value.trim()) {
           el.classList.add('has-error');
@@ -1170,18 +899,15 @@
           valid = false;
         }
       }
-
       if (!valid) {
         shake(document.getElementById('submit-btn'));
         firstErr && firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
-
       const btn = document.getElementById('submit-btn');
       btn.textContent = 'Sending…';
       btn.style.opacity = '0.65';
       btn.disabled = true;
-
       const data = new FormData();
       data.append('name',      f.name.value.trim());
       data.append('instagram', f.ig.value.trim());
@@ -1190,13 +916,25 @@
       data.append('city',      f.city.value.trim());
       data.append('state',     f.state.value);
       data.append('why_you',   f.why.value.trim());
-
+      // ─────────────────────────────────────────────────────────────────
+      // GOOGLE SHEETS AUTOMATION (PATH 2)
+      // ─────────────────────────────────────────────────────────────────
+      const sheetURL = "https://script.google.com/macros/s/AKfycbx-Wpp77Q3Up0e3A13qbVzxfHoBakl31MxD-Pu3q5Dt-2qC4qmLHZS0r-xIPWnoDi-ycQ/exec";
+      
+      // Use URLSearchParams for Google Apps Script compatibility
+      fetch(sheetURL, { 
+        method: 'POST', 
+        mode: 'no-cors', 
+        body: new URLSearchParams(data) 
+      }).catch(err => console.log("Sheet error:", err));
+      // ─────────────────────────────────────────────────────────────────
+      // FORMSPREE BACKUP
+      // ─────────────────────────────────────────────────────────────────
       try {
         const res = await fetch('https://formspree.io/f/meepjonj', {
           method: 'POST', body: data,
           headers: { 'Accept': 'application/json' },
         });
-
         if (res.ok) {
           document.getElementById('form-wrap').style.display = 'none';
           const s = document.getElementById('success-state');
@@ -1210,16 +948,13 @@
         reset(btn); alert('Network error. Check your connection and try again.');
       }
     }
-
     function reset(btn) {
       btn.textContent = 'Drop My Application';
       btn.style.opacity = '1'; btn.disabled = false;
     }
-
     function shake(el) {
       [-7,7,-5,5,-3,0].forEach((x, i) => setTimeout(() => el.style.transform = `translateX(${x}px)`, i * 55));
     }
   </script>
-
 </body>
 </html>
